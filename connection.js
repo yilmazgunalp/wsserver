@@ -16,8 +16,10 @@ exports.handleConnection = (socket) => {
   socket.isNew = true;
   console.log(++counter)
 
-  socket.on('closing',() => console.log('EMITTED CLOSING EVENT'))
-
+  socket.on('closing',() => {
+  console.log('EMITTED CLOSING EVENT')
+  socket.isClosed = true;
+  })
   socket.on('data',(data, skt = socket) => {   
       console.log('hello from DATAAAAAAA')
       console.log('clients size:', clients.size)
@@ -28,11 +30,16 @@ exports.handleConnection = (socket) => {
       skt.isNew = false;
       console.log('after handshake')
     }
-    else { 
+    else  { 
       console.log('Socket already connected') 
       //console.log('frame data',readFrame(data));
       let message = safeJSONParse(readFrame(data,skt));
       console.log('hghjgjgjh',message);
+if(socket.isClosed) {
+      console.log('Socket has closed.Cant write to it anymore')
+      return;
+
+}
       ConversationService.getAll('ruby').then(ms => console.log( 'llllllllll',ms))
         ConversationService.create(message).then(message => console.log( message,'fgfgfgfgfgfg','FROM WEBSOCKET SERVER CREATED MESSAGE'))
       if(message && message.type === 'chat' && clients.has(message.to)) {
