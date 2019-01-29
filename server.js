@@ -1,18 +1,34 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/userdb');
 const net = require('net');
 const {handleConnection} = require('./connection')
+const Messenger  = require('./messenger.js')
+const {createFrame} = require('./writer.js')
 
-const server = net.createServer()
+const clients = new Map();
 
-server.on('connection',handleConnection)
+const Server = Object.create(null);
 
-server.on('error', (err) => {
-  console.error('WEBSOCKET SERVER ERROR: ',err);
+Server.server = net.createServer();
+
+Server.messenger = new Messenger();
+
+Server.start = (Server => port => Server.server.listen(port,() => console.log('Server started MAGESTICALLY on PORT',port)))(Server)
+
+Server.authorize = (auth,id) => Server.server.on('connection',handleConnection.bind({auth,id, messenger: Server.messenger,clients})); 
+
+Server.server.on('error', (err) => {
+  console.error('Websocket Server FAILED SHAMEFULLY: ',err);
   throw err;
 });
 
-server.listen(4040, () => {
-  console.log('server BOUND');
-});
+const sendMessage = msg => {
+  let client = clients.get(msg.to);
+  if(msg && client && !client.isClosed) {
+    client.write(createFrame(msg.body));
+  }else {
+   console.error('Can not send Message',{msg,client})  
+  }
+}
 
+Server.messenger.on('sendMessage',sendMessage)
+
+module.exports = Object.freeze(Server);

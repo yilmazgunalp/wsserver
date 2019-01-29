@@ -36,19 +36,6 @@ const cookiesToJson = (cookies) => {
 return result;
 }
 
-//reads file and converts to JSON
-const fileToJson = () => {
-	return new Promise(resolve => {  
-	let usersFile = createReadStream("./users.json");
-	let users = "";
-	usersFile.on("data",chunk =>  users += chunk);
-		usersFile.on("end", () => {
-        let result = JSON.parse(("["+ users.replace(/\n/g,",").slice(0,-1) + "]")); 
-	resolve(result);  
-		});
-	});  
-};
-
 //returns request url parameters
 const qparams = (req)=> {
   let path = parse(req.url).path;
@@ -64,6 +51,19 @@ const basePath = (path)=> {
         return /^\/([^\/]*)/.exec(path)[1];
     };
 
+// Hex -> Object
+const readHttpHeader = socketData =>{
+      return socketData.toString().split('\r\n')
+      .slice(0,-2)
+      .map(line => {
+       let [k,v] = line.split(': ');
+       return {[k]:  v};
+      })
+      .reduce((acc,cur)=> {
+      acc[Object.keys(cur)[0]] = (Object.values(cur)[0]);
+      return acc;
+      },{});
+}
 
-module.exports = {safeJSONParse,getBody,formToJson, fileToJson,cookiesToJson,qparams,basePath};
+module.exports = {safeJSONParse,getBody,formToJson, readHttpHeader,cookiesToJson,qparams,basePath};
 
