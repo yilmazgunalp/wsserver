@@ -14,8 +14,8 @@ const setSocketID = (header) => {
 }
 
 const handleMessage = (msg) => {
-      ConversationService.create(msg).then(msg => console.log( msg,'FROM MESSAGE'))
-      .catch(e => console.log(e ))
+  ConversationService.create(msg).then(msg => console.log( msg,'FROM MESSAGE'))
+  .catch(e => console.log(e ))
   if(msg && msg.type === 'chat') { Master.send(msg)};
 }
 

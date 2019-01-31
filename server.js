@@ -23,7 +23,7 @@ Server.server.on('error', (err) => {
 const sendMessage = msg => {
   let client = clients.get(msg.to);
   if(msg && client && !client.isClosed) {
-    client.write(createFrame(msg.body));
+    client.write(createFrame(JSON.stringify(msg)));
   }else {
    console.error('Can not send Message',{msg,client})  
   }
