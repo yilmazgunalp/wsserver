@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/yilmazgunalp/wsserver#readme",
   "dependencies": {
-    "folktale": "^2.3.1",
-    "mongoose": "5.4.4"
+    "folktale": "^2.3.1"
   }
 }
