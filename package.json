@@ -1,23 +1,48 @@
 {
-  "name": "wsserver",
-  "version": "1.0.0",
-  "description": "",
-  "main": "master.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+  "_from": "git+https://github.com/yilmazgunalp/wsserver.git",
+  "_id": "wsserver@1.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/wsserver",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "wsserver@git+https://github.com/yilmazgunalp/wsserver.git",
+    "name": "wsserver",
+    "escapedName": "wsserver",
+    "rawSpec": "git+https://github.com/yilmazgunalp/wsserver.git",
+    "saveSpec": "git+https://github.com/yilmazgunalp/wsserver.git",
+    "fetchSpec": "https://github.com/yilmazgunalp/wsserver.git",
+    "gitCommittish": null
   },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/yilmazgunalp/wsserver.git#9a462a00769ceed9c674bf52188daba769fd7c80",
+  "_spec": "wsserver@git+https://github.com/yilmazgunalp/wsserver.git",
+  "_where": "/home/yg/ygprojects/msgservice",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/yilmazgunalp/wsserver/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "folktale": "^2.3.1"
+  },
+  "deprecated": false,
+  "description": "",
+  "homepage": "https://github.com/yilmazgunalp/wsserver#readme",
+  "license": "ISC",
+  "main": "master.js",
+  "name": "wsserver",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yilmazgunalp/wsserver.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/yilmazgunalp/wsserver/issues"
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/yilmazgunalp/wsserver#readme",
-  "dependencies": {
-    "folktale": "^2.3.1"
-  }
+  "version": "1.0.0"
 }

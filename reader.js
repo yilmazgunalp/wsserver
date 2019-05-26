@@ -29,7 +29,7 @@ exports.readFrame = (data,socket) => {
       payload[i] = payload[i] ^ maskingKey[i % 4];
     }
   }
-console.log('MESSAGE FROM CLIENT',payload)
+console.log('MESSAGE FROM CLIENT',payload.toString())
   return payload.toString();
 }
 

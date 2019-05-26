@@ -9,7 +9,16 @@ exports.handleData = function(data) {
       handShake(this.socket,head,this.clients,this.authorizer,this.identifier);
       this.socket.isNew = false;
       console.log('after handshake')
-    }else  { 
+    }else if(!this.socket.isAuthorized) { 
+      console.log('Socket is NOT isAuthorized') 
+      let cookie = readFrame(data,this.socket);
+      if(cookie === 'undefined') {
+        this.socket.end()
+        return};
+      this.clients.set(this.identifier(cookie),this.socket);
+      this.socket.isAuthorized = true;
+      console.log('after isAuthorized')
+    } else {
       console.log('Socket already connected') 
       let message = safeJSONParse(readFrame(data,this.socket));
       this.messenger.emit('newMessage',message);
@@ -42,7 +51,6 @@ const SecWSAcceptHeader = SecWSKey => {
 // TODO this is not pure needs refactoring
 const handShake = (socket,head,clients,auth,id) => {
   if(auth(head)) {
-    clients.set(id(head),socket);
     socket.write('HTTP/1.1 101 Web Socket Protocol Handshake\r\n' +
                'Upgrade: WebSocket\r\n' +
                'Connection: Upgrade\r\n' +
